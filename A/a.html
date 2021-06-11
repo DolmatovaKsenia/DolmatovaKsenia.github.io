@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title Sample web page></title>
+    <script type = "text/javascript" src = glMatrix-0.9.5.min.js></script>
+
+    <script id = "shader-vs" type = "x-shader/x-vertex">
+        precision medium float; 
+
+    </script>
+
+    <script type="text/javascript"> 
+        
+        function getShader(gl, id) {
+            let ShaderElem = document.getElementById(id);
+        }
+        
+        function CreateShader(gl, type, src) {
+            let shader = gl.CreateShader(type);
+            gl.shaderSource(shader, src);
+            gl.compileShader(shader);
+
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                windows.alert(gl.getShaderInfolog(shader));
+            }
+
+            return shader;
+        }
+        
+        function Complex(A, B) {
+            this.real = A;
+            this.imagin
+            this = B;
+        }
+        
+        function ComplexAdd(Z1, Z2) {
+            let Z = new Complex(Z1, Z2);
+        }
+
+        function CalculateMaxNumberOfIterations(cx, cy, maxNumOfIterations) {
+            let x = 0.0;
+            let y = 0.0;
+            let x2 = 0.0;
+            let y2 = 0.0;
+            let xy = 0.0;
+            let i = maxNumOfIterations;
+            while (i-- && x2 + y2 < 4) {
+                xy = x * y;
+                x2 = x * x;
+                y2 = y * y;
+                x = x2 - y2 + cx;
+                y = 2 * xy + cy; 
+            }
+            return maxNumOfIterations - i;
+        }
+        
+        function MandelBrot(xMin, xMax, yMin, yMax, numOfIterations) {
+            let Z0 = 0;
+
+            let width = canvas.width;
+            let height = canvas.height;
+            let context = canvas.getContext("2d");
+            for (let xs = 0; xs < width; xs += 1) 
+                for (let ys = 0; ys < height; ys += 1) {
+                    let x = xMin + (xMax - xMin) * xs / (width - 1);
+                    let y = yMin + (yMax - yMin) * ys / (height - 1);
+                    let belongToSet = CheckIfInMandelbrot(x / width - xs, y / height - ys, numOfIterations);
+                    let i = CalculateMaxNumberOfIterations(x, y, numOfIterations);
+                    if (belongToSet) {
+                        context.fillRect(x, y, 1, 1);
+                    }
+                }
+        }   
+        
+        function CheckIfInMandelbrot(x, y, numOfIterations) {
+            let real = x;
+            let imagin = y;
+            for(let i = 0; i < numOfIterations; i++) {
+                let dx = x * x - y * y + x;
+                let dy = 2 * x * y + y;
+                x = dx;
+                y = dy;
+                if (x * y < 5) {
+                    return true;
+                }
+            }
+            return false;      
+        }
+        
+        function initRender() {
+            let canvas = document.getElementById("webgl-canvas");
+            let gl = canvas.getContext("2d");
+            gl.viewportWidth = canvas.width;
+            gl.viewportHeight = canvas.height;
+            gl.clearColor(1.0, 0.0, 1.0, 1.0);
+            gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        }
+    </script>
+
+
+</head>
+
+<body onload = "initRender()">
+    Sample Test
+    <div>Sample Test in div</div>
+    <table>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+    </table>
+    <canvas id = "webgl-canvas" style="border: none;" width="500" height="500">
+        MandelBrot(-2.1, 2.1, -2.1, 2.1, 200);
+    </canvas>
+
+</body>
+
+        
+</html>
