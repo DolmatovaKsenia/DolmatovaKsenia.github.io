@@ -7,21 +7,84 @@
 
   <script id="shader-fs" type="x-shader/x-fragment">
     precision mediump float;
+	
+	  uniform float cell_width;
+	  uniform float mouseX;
+  	uniform float mouseY;
+	
+	
+    vec2 ComplexSet(float x, float y)
+    {
+      vec2 z;
+      
+      z.x = x;
+      z.y = y;
+      return z;
+    }
+    
+    float ComplexNorm(vec2 z)
+    {
+      float zn;
+      
+      zn = sqrt(z.x +z.y);
+      return zn;
+    }
 
-    uniform float cell_width;
+ 
+    vec2 ComplexAddComplex(vec2 z1, vec2 z2)
+    {
+      vec2 z;
+      
+      z.x = z1.x + z2.x;
+      z.y = z1.y + z2.y; 
+      return z;
+    }
+
+
+    vec2 ComplMulComplex(vec2 z1, vec2 z2)
+    {
+      vec2 z;
+      
+      z.x = (z1.x * z2.x) - (z1.y * z2.y);
+      z.y = (z1.x * z2.y) + (z2.x * z1.y);
+      return z;
+    }
+
+    
+
+        float Mandelbrot(vec2 Z)
+        {
+            vec2 Z0 = Z, Z1 = Z;
+            int numOfIterations;
+
+            for (int i = 0; i < 1000; i++)
+            {
+                if (ComplexNorm(ComplMulComplex(Z, Z)) < 4.0) {
+                    Z = ComplexAddComplex(ComplMulComplex(Z0, Z0), Z1);
+                    Z0 = Z;
+                    numOfIterations = i;
+                }
+            }
+            return numOfIterations;
+        }
 
     void main(void)
     {
-        //float cell_width = 10.0;
+      vec2 Z0, Z1, Z;
+      int nz;
 
-        bool empty_row = mod(gl_FragCoord.y / cell_width, 2.0) > 1.0;
-        bool empty_col = mod(gl_FragCoord.x / cell_width, 2.0) > 1.0;
+      Z = vec2((gl_FragCoord.x - mouseX) / cell_width, (gl_FragCoord.y + mouseY - 1000.0) / cell_width);
 
-        bool empty_cell = empty_row ^^ empty_col;
-
-        int color = empty_cell ? 0 : 1;
-
-        gl_FragColor = vec4(vec3(color), 1.0);
+      for (int i = 0; i < 1000; i++)
+      {
+          Z.x = Z0.x * Z0.x - Z0.y * Z0.y + Z1.x;
+          Z.y = 2.0 * Z0.x * Z0.y + Z1.y;
+          Z0 = Z;
+          if (Z0.x * Z0.x + Z0.y * Z0.y < 4.0)
+              nz = i;
+      }
+      float color = float(nz * 4) / 1000;
+      gl_FragColor = vec4(color * 5.0, color * 7.0, color * 25.0, 1.0);
     }
 </script>
 
@@ -170,8 +233,8 @@
       document.getElementById('input_checkers_cell_width').value = checkers_cell_width;
 
       var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open('GET', '/0/data.txt', false);
-      xmlhttp.send(null);
+      /*xmlhttp.open('GET', '/0/data.txt', false);
+      xmlhttp.send(null);*/
       if (xmlhttp.status == 200) {
         alert(xmlhttp.responseText);
       }
