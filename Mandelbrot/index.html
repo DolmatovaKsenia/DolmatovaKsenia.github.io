@@ -9,8 +9,8 @@
     precision mediump float;
 	
 	  uniform float cell_width;
-	  uniform float mouseX;
-  	uniform float mouseY;
+	  uniform float mouse_X;
+  	uniform float mouse_Y;
 	
 	
     vec2 ComplexSet(float x, float y)
@@ -52,28 +52,28 @@
 
     
 
-        float Mandelbrot(vec2 Z)
-        {
-            vec2 Z0 = Z, Z1 = Z;
-            int numOfIterations;
+    float Mandelbrot(vec2 Z)
+    {
+        vec2 Z0 = Z, Z1 = Z;
+        int numOfIterations;
 
-            for (int i = 0; i < 1000; i++)
-            {
-                if (ComplexNorm(ComplMulComplex(Z, Z)) < 4.0) {
-                    Z = ComplexAddComplex(ComplMulComplex(Z0, Z0), Z1);
-                    Z0 = Z;
-                    numOfIterations = i;
-                }
+        for (int i = 0; i < 300; i++)
+        {
+            if (ComplexNorm(ComplMulComplex(Z, Z)) < 4.0) {
+                Z = ComplexAddComplex(ComplMulComplex(Z0, Z0), Z1);
+                Z0 = Z;
+                numOfIterations = i;
             }
-            return numOfIterations;
         }
+        return numOfIterations;
+    }
 
     void main(void)
     {
       vec2 Z0, Z1, Z;
       int nz;
 
-      Z = vec2((gl_FragCoord.x - mouseX) / cell_width, (gl_FragCoord.y + mouseY - 1000.0) / cell_width);
+      Z = vec2((gl_FragCoord.x - mouse_X) / cell_width, (gl_FragCoord.y + mouse_Y - 1000.0) / cell_width);
 
       for (int i = 0; i < 1000; i++)
       {
@@ -96,7 +96,7 @@
 
     void main(void)
     {
-        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        gl_Position = vec4(aVertexPosition, 1.0);
     }
 </script>
 
@@ -154,6 +154,10 @@
 
     var shaderProgram;
 
+    var mouseX = 500;
+    var mouseY = 500;
+    var mouseClick = 0;
+
     function initShaders() {
       var fragmentShader = getShader(gl, "shader-fs");
       var vertexShader = getShader(gl, "shader-vs");
@@ -175,6 +179,8 @@
       shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
       shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
       shaderProgram.cell_width_uniform = gl.getUniformLocation(shaderProgram, "cell_width");
+      shaderProgram.mouse_X_uniform = gl.getUniformLocation(shaderProgram, "mouse_X");
+      shaderProgram.mouse_Y_uniform = gl.getUniformLocation(shaderProgram, "mouse_Y");
     }
 
 
@@ -185,6 +191,8 @@
       gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
       gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
       gl.uniform1f(shaderProgram.cell_width_uniform, checkers_cell_width);
+      gl.uniform1f(shaderProgram.mouse_X_uniform, mouseX);
+      gl.uniform1f(shaderProgram.mouse_Y_uniform, mouseY);
     }
 
     var squareVertexPositionBuffer;
@@ -226,6 +234,13 @@
       drawScene();
     }
 
+    function myCoor(e) {
+      if (mouseClick == 1) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      }
+    }
+
 
     function webGLStart() {
       // default cell width
@@ -233,8 +248,8 @@
       document.getElementById('input_checkers_cell_width').value = checkers_cell_width;
 
       var xmlhttp = new XMLHttpRequest();
-      /*xmlhttp.open('GET', '/0/data.txt', false);
-      xmlhttp.send(null);*/
+      xmlhttp.open('GET', '/0/data.txt', false);
+      xmlhttp.send(null);
       if (xmlhttp.status == 200) {
         alert(xmlhttp.responseText);
       }
@@ -265,7 +280,7 @@
 
 
 <body onload="webGLStart();">
-  <canvas id="wegl-canvas" style="border: none;" width="500" height="500"></canvas>
+  <canvas id="wegl-canvas" style="border: none;" width="500" height="500" onmousemove="myCoor(event)" onmouseup="mouseClick = 0" onmousedown="mouseClick = 1"></canvas>
 
   <br />
 
