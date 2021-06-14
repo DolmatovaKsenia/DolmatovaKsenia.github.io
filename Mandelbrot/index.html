@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <html>
 
 <head>
@@ -6,7 +8,7 @@
   <script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
 
   <script id="shader-fs" type="x-shader/x-fragment">
-    precision mediump float;
+    // precision mediump float;
 	
 	  uniform float cell_width;
 	  uniform float mouse_X;
@@ -57,7 +59,7 @@
         vec2 Z0 = Z, Z1 = Z;
         int numOfIterations;
 
-        for (int i = 0; i < 300; i++)
+        for (int i = 0; i < 255; i++)
         {
             if (ComplexNorm(ComplMulComplex(Z, Z)) < 4.0) {
                 Z = ComplexAddComplex(ComplMulComplex(Z0, Z0), Z1);
@@ -75,7 +77,7 @@
 
       Z = vec2((gl_FragCoord.x - mouse_X) / cell_width, (gl_FragCoord.y + mouse_Y - 1000.0) / cell_width);
 
-      for (int i = 0; i < 1000; i++)
+      for (int i = 0; i < 1024; i++)
       {
           Z.x = Z0.x * Z0.x - Z0.y * Z0.y + Z1.x;
           Z.y = 2.0 * Z0.x * Z0.y + Z1.y;
@@ -83,7 +85,7 @@
           if (Z0.x * Z0.x + Z0.y * Z0.y < 4.0)
               nz = i;
       }
-      float color = float(nz * 4) / 1000;
+      float color = float(nz * 4) / 1024;
       gl_FragColor = vec4(color * 5.0, color * 7.0, color * 25.0, 1.0);
     }
 </script>
@@ -247,12 +249,12 @@
       checkers_cell_width = 30;
       document.getElementById('input_checkers_cell_width').value = checkers_cell_width;
 
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open('GET', '/0/data.txt', false);
+      /*var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open('GET', 'data.txt', false);
       xmlhttp.send(null);
       if (xmlhttp.status == 200) {
         alert(xmlhttp.responseText);
-      }
+      }*/
 
       var canvas = document.getElementById("wegl-canvas");
       initGL(canvas);
