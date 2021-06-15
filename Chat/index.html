@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    p.ridge {border-style: ridge;}
+
+    div {
+        max-width: 1000px;
+        height: 500px;
+        background-color: powderblue;
+    }
+    input[type=text], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    div {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+</style>
+<script>
+    function sendMessage() {
+      let name_changer = document.getElementById("name");
+      let message_changer = document.getElementById("message");
+
+      let msg = { name: name_changer.value, message: message_changer.value };
+
+      fetch("/msg", {
+        method: "POST",
+        headers: { "Contet-Type": "application/json;charset=utf-8" },
+        body: JSON.stringify(msg)
+      });
+      document.getElementById("message").value = "";
+    }
+
+    function getMessages() {
+      fetch("/msg", { method: "GET" })
+        .then((result) => {
+          return result.text();
+        })
+        .then((text) => {
+          let messages_pane = document.getElementById("messages_pane");
+          messages_pane.innerHTML = text;
+
+          tick();
+        });
+    }
+
+    function tick() {
+      setTimeout(getMessages, 500);
+    }
+
+    function runScript(event) {
+      if (event.which == 13 || event.keyCode == 13) {
+        sendMessage();
+      }
+    }
+
+  </script>
+</head>
+
+<body onload="tick();">
+    <input type="text" id="name" /><br>
+    <input type="text" id="message" onkeypress="runScript(event)"/><br>
+    <button onclick="sendMessage();" id="send_msg_bttn">Send Message</button>
+    <p id="messages_pane"></p>
+    
+  </body>

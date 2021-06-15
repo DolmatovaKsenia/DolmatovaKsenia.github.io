@@ -8,7 +8,7 @@
   <script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
 
   <script id="shader-fs" type="x-shader/x-fragment">
-    // precision mediump float;
+    precision mediump float;
 	
 	  uniform float cell_width;
 	  uniform float mouse_X;
@@ -54,7 +54,7 @@
 
     
 
-    float Mandelbrot(vec2 Z)
+    int Mandelbrot(vec2 Z)
     {
         vec2 Z0 = Z, Z1 = Z;
         int numOfIterations;
@@ -85,7 +85,7 @@
           if (Z0.x * Z0.x + Z0.y * Z0.y < 4.0)
               nz = i;
       }
-      float color = float(nz * 4) / 1024;
+      float color = float(nz * 5) / 1024.0;
       gl_FragColor = vec4(color * 5.0, color * 7.0, color * 25.0, 1.0);
     }
 </script>
@@ -249,12 +249,12 @@
       checkers_cell_width = 30;
       document.getElementById('input_checkers_cell_width').value = checkers_cell_width;
 
-      /*var xmlhttp = new XMLHttpRequest();
+      var xmlhttp = new XMLHttpRequest();
       xmlhttp.open('GET', 'data.txt', false);
       xmlhttp.send(null);
       if (xmlhttp.status == 200) {
         alert(xmlhttp.responseText);
-      }*/
+      }
 
       var canvas = document.getElementById("wegl-canvas");
       initGL(canvas);
