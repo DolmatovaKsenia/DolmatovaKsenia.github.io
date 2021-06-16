@@ -246,15 +246,15 @@
 
     function webGLStart() {
       // default cell width
-      checkers_cell_width = 30;
+      checkers_cell_width = 255;
       document.getElementById('input_checkers_cell_width').value = checkers_cell_width;
 
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open('GET', 'data.txt', false);
-      xmlhttp.send(null);
-      if (xmlhttp.status == 200) {
-        alert(xmlhttp.responseText);
-      }
+      // let xmlhttp = new XMLHttpRequest();
+      // xmlhttp.open('GET', 'data.txt', false);
+      // xmlhttp.send(null);
+      // if (xmlhttp.status == 200) {
+      //   alert(xmlhttp.responseText);
+      // } 
 
       var canvas = document.getElementById("wegl-canvas");
       initGL(canvas);
@@ -286,7 +286,7 @@
 
   <br />
 
-  <label for="input_checkers_cell_width"> cell width</label> <input type="text" id="input_checkers_cell_width"
+  <label for="input_checkers_cell_width"> Iterations</label> <input type="text" id="input_checkers_cell_width"
     onkeyup="update_checkers_cell_width()"><br>
 
 </body>
