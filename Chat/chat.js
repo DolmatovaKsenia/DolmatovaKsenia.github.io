@@ -18,7 +18,7 @@ const requestListener = function (req, res) {
         contentType = "text/css";
     } else {
         res.writeHead(500);
-        res.end("Error, unsupported");
+        res.end("Error, this type is unsupported");
         return;
     }
 
