@@ -1,26 +1,40 @@
 const http = require("http");
 const fs = require('fs').promises;
 
-const host = 'localhost';
-const port = 8000;
-
-let indexFile;
+// requests handle
+let messages = [];
 
 const requestListener = function (req, res) {
-    res.setHeader("Content-Type", "text/html");
+  if (req.url === "/") {
+    fs.readFile(`${__dirname}/index.html`)
+      .then((html_content) => {
+        res.setHeader("Content-Type", "text/html");
+        res.writeHead(200);
+        res.end(html_content);
+        console.log(
+          `Request: ${req.method}, ${req.url}.`
+        );
+
+      });
+  } else if (req.url === "/msg" && req.method === "POST") {
+    let data = "";
+    req.once('data', chunk => {
+      data += chunk;
+    })
+    req.once('end', () => {
+      let new_msg = JSON.parse(data);
+      messages.push(new_msg);
+      console.log(`New msg added - { name: "${new_msg.name}", message: "${new_msg.message}" }.`);
+      res.end();
+    })
+  } else if (req.url === "/msg" && req.method === "GET") {
+    res.setHeader("Content-Type", "text");
     res.writeHead(200);
-    res.end(indexFile);
+    res.end(JSON.stringify(messages));
+  }
 };
 
+// creating server
+const port = 8000;
 const server = http.createServer(requestListener);
-fs.readFile(__dirname + "/index.html")
-    .then(contents => {
-        indexFile = contents;
-        server.listen(port, host, () => {
-            console.log(`Server is running on http://${host}:${port}`);
-        });
-    })
-    .catch(err => {
-        console.error(`Could not read index.html file: ${err}`);
-        process.exit(1);
-    });
+server.listen(port);
