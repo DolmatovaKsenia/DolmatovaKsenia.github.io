@@ -2,12 +2,8 @@
 <html>
 <head>
   <link rel="stylesheet" href="style.css">
-<script>
-
-    function messsagesInBox(messages) {
-      let user_display = document.getElementById("");
-
-    }
+  <script>
+    let msgtexts = "";
     function sendMessage() {
       let name_changer = document.getElementById("name");
       let message_changer = document.getElementById("message");
@@ -19,8 +15,17 @@
         headers: { "Contet-Type": "application/json;charset=utf-8" },
         body: JSON.stringify(msg)
       });
-      message_changer.value = ""; 
+      message_changer.value = "";
     }
+
+    function lengths(obj) {
+            var size = 0,
+                key;
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            return size;
+    };
 
     function getMessages() {
       fetch("/msg", { method: "GET" })
@@ -29,7 +34,12 @@
         })
         .then((json) => {
           let messages = JSON.parse(json);
-          messagesInBox(messages);
+          let msgtext_tmp = "";
+          let messages_pane = document.getElementById("messages_pane");
+          for (var i = 0; i <= lengths(messages) - 1; i++)
+              msgtext_tmp += `<div class="msgs"> ${messages[i].name}: ${messages[i].message} </div><br>`;
+          if (msgtext_tmp != msgtexts)
+              messages_pane.innerHTML = msgtexts = msgtext_tmp;
           tick();
         });
     }
@@ -51,10 +61,8 @@
     <input type="text" id="name" /><br>
     Message
     <input type="text" id="message" onkeypress="runScript(event)"/><br>
-    <button onclick="sendMessage();" id="send_msg_bttn">Send Message</button>
-
-    <div id="content">
-      <p class="round3">Message</p>
-    </div>
+    <div>
+      <p id="messages_pane"></p>
+    </div> 
     
   </body>
