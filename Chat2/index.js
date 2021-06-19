@@ -19,6 +19,9 @@ io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
       console.log('message: ' + msg);
     });
+    socket.on('user name', (user_name) => {
+      console.log('name: ' + user_name);
+    });
   });
   io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' });
 

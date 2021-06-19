@@ -249,12 +249,12 @@
       checkers_cell_width = 255;
       document.getElementById('input_checkers_cell_width').value = checkers_cell_width;
 
-      // let xmlhttp = new XMLHttpRequest();
-      // xmlhttp.open('GET', 'data.txt', false);
-      // xmlhttp.send(null);
-      // if (xmlhttp.status == 200) {
-      //   alert(xmlhttp.responseText);
-      // } 
+      let xmlhttp = new XMLHttpRequest();
+      //xmlhttp.open('GET', 'data.txt', false);
+      //xmlhttp.send(null);
+      if (xmlhttp.status == 200) {
+        alert(xmlhttp.responseText);
+      } 
 
       var canvas = document.getElementById("wegl-canvas");
       initGL(canvas);
