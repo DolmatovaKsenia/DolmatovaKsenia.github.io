@@ -1,281 +1,187 @@
-<iframe src="project.html" width="480" height="720" class="quiz-frame"></iframe>
-class Quiz
-{
-    constructor(type, questions, results)
+const question = document.getElementById("question");
+let indicator;
+let indexPage = 0;
+const numberOfAllQuestions = document.getElementById("number-of-questions");
+const btnNext = document.getElementById("btn-next");
+
+const option1 = document.querySelector(".option1");
+const option2 = document.querySelector(".option2");
+const option3 = document.querySelector(".option3");
+const option4 = document.querySelector(".option4");
+
+const answerElements = document.querySelectorAll(".option");
+
+let score = 0;
+
+const correctAnswer = document.getElementById("correct-answer");
+const answerTracker = document.getElementById("answer-tracker");
+
+const questions = [
     {
-        this.type = type;
-
-        this.questions = questions;
-
-        this.results = results;
-
-        this.score = 0;
-
-        this.result = 0;
-
-        this.current_question = 0;
-
-    }
-
-    Click(index) {
-        let value = this.questions[this.current_question].Click(index);
-
-        this.score += value;
-
-        let correct = -1;
-
-        if (value >= 1) {
-            correct = index;
-        }
-        else {
-            for (let i = 0; i < this.questions[this.current_question].answer.length; i++)
-            {
-                if(this.questions[this.current_question].answers[i].value >= 1)
-               {
-                   correct = i;
-                   break;
-               }
-            }
-        }
-        this.Next();
-        return correct;
-    }
-
-    Next()
+        question: "Зачем?",
+        options: [
+            'Hello',
+            'Good morning',
+            'Good evening',
+            'Good buy'
+        ],
+        correctAnswer: 2
+    },
     {
-        this.current_question++;
-
-        if (this.current_question >= this.questions.length)
-        {
-            this.End();
-        }
-    }
-
-    End()
+        question: "Почему?",
+        options: [
+            'ght',
+            'ghhyhi',
+            'gi8ygyugy',
+            'hgfrtyhh'
+        ],
+        correctAnswer: 3
+    },
     {
-        for (let i = 0; i < this.results.length; i++)
-        {
-            if (this.results[i].Check(this.score))
-            {
-                this.result = i;
-            }
-        }
-    }
-}
-
-class Question{
-
-    constructor(text, answers)
+        question: "hfghukfjk",
+        options: [
+            'fvvef',
+            'rwegver',
+            'wegtrttwe',
+            'rtbdrtgtgber'
+        ],
+        correctAnswer: 2
+    },
     {
-        this.text = text;
-        this.answer = answers;
-    }
-
-    Click(index)
+        question: "wrahetwheq",
+        options: [
+            'fvgSVSAD',
+            'dfahehe',
+            'hdfshjnsdjhsdrt',
+            'dfhtetesnn'
+        ],
+        correctAnswer: 4
+    },
     {
-        return this.answers[index].value;
-    }
-
-}
-
-class Answer
-{
-    constructor(text, value)
+        question: "fggsdbdb",
+        options: [
+            'asdg',
+            'fsdgaefsdb',
+            'greshgrdhweah',
+            'thgetshehwdwtthe'
+        ],
+        correctAnswer: 2
+    },
     {
-        this.text = text;
-        this.value = value;
-    }
-}
-
-class Result
-{
-    constructor(text, value)
+        question: "dgwerahwe",
+        options: [
+            'rgfwerg',
+            'fsadhbarefhbaweq',
+            'dfhanhafhe',
+            'dgshdshbg'
+        ],
+        correctAnswer: 3
+    },
     {
-        this.text = text;
-        this.value = value;
-    }
-    Check(value)
+        question: "rsabhfsdahet",
+        options: [
+            'egeragergeq',
+            'gfsagras',
+            'grergre',
+            'fdheddga'
+        ],
+        correctAnswer: 1
+    },
     {
-        if (this.value <= value)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        question: "fhefafgfs",
+        options: [
+            'sfdgsagesfg',
+            'sdfbhfdabhfsbh',
+            'safgfaghrb',
+            'sfhwfahgfw'
+        ],
+        correctAnswer: 2
+    },
+    {
+        question: "ftbhsrtgdn",
+        options: [
+            'ggsdfbsbsdf',
+            'fgbdfbdsbdg',
+            'grasegbdfbh',
+            'grergegherh'
+        ],
+        correctAnswer: 3
+    },
+    {
+        question: "htgfuhfjkfuigy",
+        options: [
+            'fdghregwerg',
+            'rwgregrwegergerg',
+            'fsdgesrgretge',
+            'rfgrdgregreg'
+        ],
+        correctAnswer: 4
     }
-
-}
-
-const results =
-[
-   new Result("Неудовлетворительно", 0),
-   new Result("Неудовлетворительно", 1),
-   new Result("Удовлетворительно", 2),
-   new Result("Удовлетворительно", 3),
-   new Result("Хорошо", 4),
-   new Result("Хорошо", 5),
-   new Result("Отлично", 6)
 ];
- 
-//Массив с вопросами !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-const questions =
-[
-   new Question("2 + 2 = ",
-   [
-       new Answer("2", 0),
-       new Answer("3", 0),
-       new Answer("4", 1),
-       new Answer("0", 0)
-   ]),
 
-   new Question("3 + 3 = ",
-   [
-       new Answer("2", 0),
-       new Answer("3", 0),
-       new Answer("6", 0),
-       new Answer("0", 0)
-   ]),
-   
-   new Question("4 + 4 = ",
-   [
-       new Answer("0", 0),
-       new Answer("16", 0),
-       new Answer("8", 1),
-       new Answer("9", 0)
-   ]),
+quiz.addEventListener("change", (event) => {
+    
+});
 
-   new Question("5 + 5 = ",
-   [
-       new Answer("9", 0),
-       new Answer("10", 1),
-       new Answer("0", 0),
-       new Answer("12", 0)
-   ]),
+quiz.addEventListener("click", (event) => {
+    if (event.target.classList.contains(btn-next)) {
+        console.log("Next");
+    }
+    if (event.target.classList.contains(btn-restart)) {
+        console.log("Restart");
+    }
+});
 
-   new Question("6 + 5 = ",
-   [
-       new Answer("9", 0),
-       new Answer("11", 1),
-       new Answer("10", 0),
-       new Answer("12", 0)
-   ]),
+numberOfAllQuestions.innerHTML = questions.length; 
 
-   new Question("23 + 1 = ",
-   [
-       new Answer("24", 1),
-       new Answer("54", 0),
-       new Answer("32", 0),
-       new Answer("67", 0)
-   ])
+const load = () => {
+    questions.innerHTML = questions[indexPage].question;
 
-];
- 
-const quiz = new Quiz(1, questions, results);
+    option1.innerHTML = questions[indicator].options[0];
+    option2.innerHTML = questions[indicator].options[1];
+    option3.innerHTML = questions[indicator].options[2];
+    option4.innerHTML = questions[indicator].options[3];
 
-Update();
- 
-function Update()
-{
-   if(quiz.current < quiz.questions.length)
-   {
-       headElem.innerHTML = quiz.questions[quiz.current].text;
- 
-       buttonsElem.innerHTML = "";
- 
-       for(let i = 0; i < quiz.questions[quiz.current].answers.length; i++)
-       {
-           let btn = document.createElement("button");
-           btn.className = "button";
- 
-           btn.innerHTML = quiz.questions[quiz.current].answers[i].text;
- 
-           btn.setAttribute("index", i);
- 
-           buttonsElem.appendChild(btn);
-       }
-      
-       pagesElem.innerHTML = (quiz.current + 1) + " / " + quiz.questions.length;
- 
-       Init();
-   }
-   else
-   {
-       buttonsElem.innerHTML = "";
-       headElem.innerHTML = quiz.results[quiz.result].text;
-       pagesElem.innerHTML = "Очки: " + quiz.score;
-   }
-}
- 
-function Init()
-{
-   let btns = document.getElementsByClassName("button");
- 
-   for(let i = 0; i < btns.length; i++)
-   {
-       btns[i].addEventListener("click", function (e) { Click(e.target.getAttribute("index")); });
-   }
-}
- 
-function Click(index)
-{
-   let correct = quiz.Click(index);
- 
-   let btns = document.getElementsByClassName("button");
- 
-   for(let i = 0; i < btns.length; i++)
-   {
-       btns[i].className = "button button_passive";
-   }
- 
-   if(quiz.type == 1)
-   {
-       if(correct >= 0)
-       {
-           btns[correct].className = "button button_correct";
-       }
- 
-       if(index != correct)
-       {
-           btns[index].className = "button button_wrong";
-       }
-   }
-   else
-   {
-       btns[index].className = "button button_correct";
-   }
- 
-   setTimeout(Update, 5000);
+    indicator.innerHTML = indicator + 1;
+    indicator++;
 }
 
+let completedAnswers = [];
 
+const randomQuestion = () => {
+    let randomNumber = Math.floor(Math.random() * questions.length);
+    let hit = false;
 
+    if (indexPage == questions.length) {
+        quizEnd();
+    }
+    else {
+        if (completedAnswers.length > 0) {
+            completedAnswers.forEach(item => {
+                if (item == randomNumber) {
+                    hit = true;
+                }
+            });
+            if (hit) {
+                randomQuestion();
+            }
+            else {
+                indicator = randomNumber;
+                load();
+            }
+        };
+        if (completedAnswers == 0) {
+            indicator = randomNumber;
+            load();
+        }
+    };
+    completedAnswers.push(indicator);
+};
 
+const quizEnd = () => {
+    console.log("Конец игры");
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+window.addEventListener('load', () => {
+    randomQuestion();
+})
