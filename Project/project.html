@@ -9,41 +9,38 @@
     <body>
         <div class="quiz" id="quiz">
             <div class="content">
-                <h1> Конец викторины </h1>
-                <p>
-                    Вы набрали
-                    <span id="correct-answers"></span>
-                    из
+                <h3>Конец викторины!</h3>
+                <p>Вы ответили на
+                    <span id="correct-answers"></span> вопросов из
                     <span id="number-of-questions"></span>
-                    очков
                 </p>
-                <button id="btn-restart">Пройти викторину с начала</button>
-            </div> 
-            <div class="quiz-questions" id="questions">
-                <div class="quiz-indicator">
-                    <h3>
-                        Вопрос
-                        <span id="indicator"></span>
-                        из 
-                        <span id="number-of-questions"></span>
-                    </h3>
-                </div>
-                <div class="quiz-questions-item">
-                    <div class="quiz-questions-item__question">САМ ВОПРОС</div>
-                        <div class="quiz-questions-item__answers">
-                            <div data-id="0" class="answer answer1"></div>
-                            <div data-id="1" class="answer answer2"></div>
-                            <div data-id="2" class="answer answer3"></div>
-                            <div data-id="3" class="answer answer4"></div> 
-                        </div>
-                </div>
+                <button class="btn-restart" id="btn-restart">Play again!</button>
             </div>
         </div>
+        <div class="quiz-conteiner">
+            <div class="quiz-indicator">
+                <h3>
+                    Вопрос
+                    <span id="indicator"></span>
+                    из 
+                    <span id="number-of-questions"></span>
+                </h3>
+            </div>
+            <div id="question"></div>
+            <div class="options">
+                <div data-id="0" class="option option1"></div>
+                <div data-id="1" class="option option2"></div>
+                <div data-id="2" class="option option3"></div>
+                <div data-id="3" class="option option4"></div> 
+            </div>
+            <div class="buttons">
+                <button id="btn-next">Next</button>
+            </div>
+            <div id="question-tracker">
+                
             </div>
         </div>
-        <div class="quiz-controls">
-            <button class="btn-next" id="btn-next">Next</button>
-        </div>
+                    
         <script src="project.js"></script>
         
     </body>
