@@ -1,3 +1,72 @@
+const http = require("http");
+const fs = require('fs').promises;
+
+const host = 'localhost';
+const port = 8000;
+
+const requestListener = function (req, res) {
+  if (req.url === "/") {
+    fs.readFile(`${__dirname}/index.html`)
+      .then((html_content) => {
+        res.setHeader("Content-Type", "text/html");
+        res.writeHead(200);
+        res.end(html_content);
+        console.log(
+          `Request: ${req.method}, ${req.url}.`
+        );
+
+      });
+  } else if (req.url.endsWith(".css")) {
+    fs.readFile(`${__dirname}/style.css`)
+      .then((css_content) => {
+        res.setHeader("Content-Type", "text/css");
+        res.writeHead(200);
+        res.end(css_content);
+        console.log(
+          `Request: ${req.method}, ${req.url}.`
+        );
+
+      });
+  } 
+}
+
+const server = http.createServer(requestListener);
+server.listen(port);
+
+
+import React from 'react'
+import 'project.css'
+
+function Project() {
+    return (
+        <div className="project">
+            <div className="quiz">
+                <div className="question-place">
+                    <div className="number-of-questions">
+                        <span>Вопрос 1</span>/10
+                    </div>
+                    <div className="question">Вопрос</div>
+                </div>
+                <div className="answer-place">
+                    <button>Вариант 1</button>
+                    <button>Вариант 2</button>
+                    <button>Вариант 3</button>
+                    <button>Вариант 4</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
+
+
+
+
+
+
+
+
 const question = document.getElementById("question");
 let indicator;
 let indexPage = 0;
