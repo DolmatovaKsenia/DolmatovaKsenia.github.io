@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Quiz</title>
+        <link rel="stylesheet" href="project.css">
+    </head>
+
+    <body>
+        <script src="project.js"></script>
+        <div class="quiz" id="quiz">
+            <div class="content">
+                <h3>Конец викторины!</h3>
+                <p>Вы ответили на
+                    <span id="correct-answers"></span> вопросов из
+                    <span id="number-of-questions"></span>
+                </p>
+                <button class="btn-restart" id="btn-restart">Play again!</button>
+            </div>
+        </div>
+        <div class="quiz-conteiner">
+            <div class="quiz-indicator">
+                <h3>
+                    Вопрос
+                    <span id="indicator"></span>
+                    из 
+                    <span id="number-of-questions"></span>
+                </h3>
+            </div>
+            <div id="question"></div>
+            <div class="options">
+                <div data-id="0" class="option option1"></div>
+                <div data-id="1" class="option option2"></div>
+                <div data-id="2" class="option option3"></div>
+                <div data-id="3" class="option option4"></div> 
+            </div>
+            <div class="buttons">
+                <button id="btn-next">Next</button>
+            </div>
+            <div id="question-tracker">
+                
+            </div>
+        </div>
+                    
+        <script src="project.js"></script>
+  
+    </body>
+</html>
