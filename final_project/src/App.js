@@ -2,11 +2,43 @@ import React, { useState } from 'react';
 import { findRenderedDOMComponentWithClass } from 'react-dom/test-utils';
 import './App.css';
 
+
+const addNewQuiz = () => {
+  // Пользователь вводит количество вопросов в викторине
+  <div id="table">
+    <label for={questions.length}>Количество вопросов</label>  
+    <input type="text" name="number-of-questions" placeholder="Количество вопросов в викторине" id="number-of-questions"></input>
+  </div>
+    for (let i = 0; i < questions.length; i++) {
+      // Пользователь вводит вопрос 
+      for (let i = 0; i < 4; i++) {
+        // Пользователь вводит варианты ответов на вопрос и правильный ответ
+      }
+    }
+    // Кнопка, по клику происходит создание викторины. функция для клика: "handleAnswerClick"
+    // Программа генерирует код(id) по которому можно проходить эту викторину
+  };
+
+  const createQuiz = (numberOfQuestions, questions) => {
+    // создание викторины: кусок из App()
+    <select>
+      <option>{option1}</option>
+      <option>{option2}</option>
+      <option>{option3}</option>
+      <option>{option4}</option>
+    </select>
+  }
+
+  const passQuiz = (id) => {
+    // используя датабазу найти по id викторину и запустить её 
+
+  }
+
 function App() {
 
   const questions = [
     {
-      question: 'why',
+      question: '1',
       options: [
         'option1',
         'option2',
@@ -81,7 +113,7 @@ function App() {
             <button className="btn-next">Next</button>   
           </div>
       </div>
-      }
+}
       </div>
   )} 
 export default App;
