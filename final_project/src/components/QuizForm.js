@@ -117,7 +117,7 @@ export default class QuizForm extends Component {
                         <br/>
                         <button
                         className="NextStep"
-                        onClick={(props) => {this.getUserName(this.state.value);this.nextStep(step)}}>Next</button>
+                        onClick={(props) => {this.getUserName(this.state.value);this.nextStep(step)}}>Далее</button>
                      </div>)
                     :
                     step <= Object.keys(quiestions).length ?
@@ -139,7 +139,7 @@ export default class QuizForm extends Component {
                             clickedAnswer && Object.keys(quiestions).length >= step
                             ? false : true
                         }
-                        onClick={() => this.nextStep(step)}>Next</button>
+                        onClick={() => this.nextStep(step)}>Далее</button>
                     </>) : (
                         <div className="finalPage">
                             <h1>{userName}, Вы закончили викторину!</h1>
